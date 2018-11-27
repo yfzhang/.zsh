@@ -1,8 +1,11 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
-# Path to your oh-my-zsh installation.
-export ZSH=/Users/yf/.oh-my-zsh
+if [ "$(uname 2> /dev/null)" != "Linux" ]; then
+    export ZSH=/Users/yf/.oh-my-zsh
+else
+    export ZSH=/home/yf/.oh-my-zsh
+fi
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -84,13 +87,80 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-ZSH_THEME="agnoster"
+if [ "$(uname 2> /dev/null)" != "Linux" ]; then
+    # for mac
+    ZSH_THEME="agnoster"
+    export PATH="/Users/yf/miniconda3/bin:$PATH"
+else
+    # for linux
+    setxkbmap -option caps:swapescape
+    export PATH=/usr/local/cuda/bin${PATH:+:${PATH}}
+    export PATH=/home/yf/download/cling/tools/packaging/cling-build/builddir/bin${PATH:+:${PATH}}
+    #export PATH="/home/yf/anaconda3/bin:$PATH"
+    export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64"
+    export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/home/yf/Downloads/mjpro131/bin"
+    export CUDA_HOME=/usr/local/cuda
+    export PYTHONPATH=/home/yf/download/tensorflow_models:$PYTHONPATH
+    export PYTHONPATH=/home/yf/git_repo/ros_tf_utils:$PYTHONPATH
 
-export PATH="/Users/yf/miniconda3/bin:$PATH"
+    #export ROS_MASTER_URI=http://tegra-ubuntu:11311
+    export ROS_MASTER_URI=http://yf:11311
+    export ROS_HOSTNAME=yf
 
-alias s='screen'
+    # ssh
+    alias sshmanifold='ssh ubuntu@192.168.0.170'
+    alias sshtx2='ssh nvidia@192.168.0.171'
+    alias sshhummingbird='ssh nvidia@192.168.0.113'
+    alias sshodroid='ssh odroid@192.168.0.111'
 
-alias sch='cd /Users/yf/git_repo/schweizer_messer'
+    # filming drone
+    alias takeoff='rosservice call /sm/takeoffSrv'
+    alias opt='roslaunch filming_optimizer drone_opt_node.launch'
+    alias tracking='roslaunch filming_object_tracking detection_tracking_test.launch'
+    alias fakeactor='roslaunch filming_motion_prediction fake_actor.launch'
+    alias vc='roslaunch filming_vehicle_control vehicle_control_test.launch'
+
+    # catkin
+    alias explore='source ~/explore_ws/devel/setup.zsh'
+    alias source_catkin='source ~/catkin_ws/devel/setup.zsh'
+    alias ros='source /opt/ros/kinetic/setup.zsh; source ~/catkin_ws/devel/setup.zsh'
+    alias airsim='source /opt/ros/kinetic/setup.zsh; source ~/airsim_ws/devel/setup.zsh'
+    alias main='source /opt/ros/kinetic/setup.zsh; source ~/main_ws/devel/setup.zsh'
+    alias c="catkin build --this"
+    alias s="source ~/catkin_ws/devel/setup.zsh; source ~/.zshrc"
+
+    # conda
+    alias useconda='export PATH="/home/yf/anaconda3/bin:$PATH"'
+    alias py36base='source activate py36_base'
+
+    # network
+    alias scan='sudo arp-scan --interface=enp0s31f6 --localnet' # scan hosts in local network
+
+    # system
+    alias clearcache='echo 3 | sudo tee /proc/sys/vm/drop_caches'
+    alias clearswap='sudo swapoff -a'
+
+    # docker
+    alias dockerubuntu='docker run -v /data/datasets/yanfu:/data/datasets/yanfu -it zyf7284563/ubuntu:16.04'
+    alias docker_rm_existed='docker rm $(docker ps -q -f status=exited)'
+
+    # others
+    alias unreal='/home/yf/download/UnrealEngine/Engine/Binaries/Linux/UE4Editor'
+    alias clion='/usr/local/bin/clion'
+    alias charm='/usr/local/bin/charm'
+    alias open='xdg-open'
+    alias gpu='watch -n 0.5 nvidia-smi'
+fi
+
+# others
+alias zshrc='vim ~/.zshrc'
+
+# filesystem
+alias gascola='cd ~/data/0r3h/gascola17_fall'
+alias ca='cd ~/catkin_ws/src/ca'
+alias yanfu='cd /data/datasets/yanfu/'
+alias paper='cd ~/Dropbox/论文'
+alias sch='cd ~/git_repo/schweizer_messer'
 alias yanfu='cd /data/datasets/yanfu'
 
 alias fanqiang='ssh -NfD 7777 yf@128.2.176.221 -p 4545'
@@ -102,12 +172,11 @@ alias sshperceptron='ssh zyanfu@perceptron.ri.cmu.edu'
 alias sshyf='ssh yf@aeroscout2.frc.ri.cmu.edu -p 4545'
 alias sshmanifold='ssh ubuntu@192.168.5.170'
 
-alias vimconfig='vim ~/.vim_runtime/my_configs.vim'
-alias zshrc='vim ~/.zshrc'
-alias clion='/usr/local/bin/clion'
-
-alias gs='git status'
-alias gp='git push'
-alias gl='git log'
-alias gc='git commit'
-alias ga='git add .'
+# git
+alias gitpullall='for i in */.git; do ( echo $i; cd $i/..; git pull; ); done' # pull all git repos in current directory
+alias gs="git status"
+alias gc="git commit"
+alias gp="git push"
+alias gl="git log"
+alias ga="git add ."
+alias gitupdate="git add .; git commit -m 'update'; git push origin"
