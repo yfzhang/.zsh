@@ -54,9 +54,11 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting zsh-256color)
 
 source $ZSH/oh-my-zsh.sh
+
+#AUTOSUGGESTION_HIGHLIGHT_COLOR='fg=cyan'
 
 # User configuration
 
@@ -110,7 +112,7 @@ else
     # ssh
     alias sshmanifold='ssh ubuntu@192.168.0.170'
     alias sshtx2='ssh nvidia@192.168.0.171'
-    alias sshhummingbird='ssh nvidia@192.168.0.113'
+    alias sshhummingbird='ssh nvidia@192.168.0.131'
     alias sshodroid='ssh odroid@192.168.0.111'
 
     # filming drone
@@ -127,7 +129,6 @@ else
     alias airsim='source /opt/ros/kinetic/setup.zsh; source ~/airsim_ws/devel/setup.zsh'
     alias main='source /opt/ros/kinetic/setup.zsh; source ~/main_ws/devel/setup.zsh'
     alias c="catkin build --this"
-    alias s="source ~/catkin_ws/devel/setup.zsh; source ~/.zshrc"
 
     # conda
     alias useconda='export PATH="/home/yf/anaconda3/bin:$PATH"'
@@ -165,7 +166,6 @@ alias yanfu='cd /data/datasets/yanfu'
 
 alias fanqiang='ssh -NfD 7777 yf@128.2.176.221 -p 4545'
 alias sshvisdom='ssh -f -N -L 8097:localhost:8097 yf@aeroscout2.frc.ri.cmu.edu -p 4545'
-alias sshhummingbird='ssh nvidia@10.5.1.1'
 alias sshskydio='ssh root@192.168.10.1'
 alias sshjupyter='ssh -L localhost:8888:localhost:8888 yf@aeroscout2.frc.ri.cmu.edu -p 4545'
 alias sshperceptron='ssh zyanfu@perceptron.ri.cmu.edu'
