@@ -129,6 +129,8 @@ else
     alias airsim='source /opt/ros/kinetic/setup.zsh; source ~/airsim_ws/devel/setup.zsh'
     alias main='source /opt/ros/kinetic/setup.zsh; source ~/main_ws/devel/setup.zsh'
     alias c="catkin build --this"
+    source /opt/ros/kinetic/setup.zsh
+    source ~/filming_ws/devel/setup.zsh
 
     # conda
     alias useconda='export PATH="/home/yf/anaconda3/bin:$PATH"'
@@ -173,10 +175,10 @@ alias sshyf='ssh yf@aeroscout2.frc.ri.cmu.edu -p 4545'
 alias sshmanifold='ssh ubuntu@192.168.5.170'
 
 # git
+alias gitlog="git log --oneline --graph --decorate"
 alias gitpullall='for i in */.git; do ( echo $i; cd $i/..; git pull; ); done' # pull all git repos in current directory
 alias gs="git status"
 alias gc="git commit"
 alias gp="git push"
-alias gl="git log"
 alias ga="git add ."
 alias gitupdate="git add .; git commit -m 'update'; git push origin"
